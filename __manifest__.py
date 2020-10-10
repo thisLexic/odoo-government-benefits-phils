@@ -27,6 +27,7 @@
 
         'views/sss.xml',
         'views/philhealth.xml',
+        'views/pagibig.xml',
         'views/hr_employee.xml',
         'views/res_company.xml',
     ],
