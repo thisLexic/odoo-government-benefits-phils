@@ -5,10 +5,18 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='hr_settings']" position='after'>
-                <page name='sss' string='SSS'>
+                <page name='sss' string="Gov't Benefits">
                     <label for="emp_sss_num" string="SSS Number"/>
                     <field name="emp_sss_num" />
                     <field name="emp_sss_detl_ids" readonly="1" context="{'tree_view_ref' : 'gov_bene_phils.sss_emp_detls_emp_tree'}" />
+                    
+                    <label for="emp_philhealth_num" string="PhilHealth Number"/>
+                    <field name="emp_philhealth_num" />
+                    <field name="emp_philhealth_detl_ids" readonly="1" context="{'tree_view_ref' : 'gov_bene_phils.philhealth_emp_detls_emp_tree'}" />
+
+                    <label for="emp_pagibig_num" string="Pag-Ibig Number"/>
+                    <field name="emp_pagibig_num" />
+                    <field name="emp_pagibig_detl_ids" readonly="1" context="{'tree_view_ref' : 'gov_bene_phils.pagibig_emp_detls_emp_tree'}" />
                 </page>
             </xpath>      
         </field>
