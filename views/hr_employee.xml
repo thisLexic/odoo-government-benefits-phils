@@ -1,0 +1,16 @@
+<odoo>
+    <record id="hr_employee_inherit" model="ir.ui.view">
+        <field name="name">Hr Employee Inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']" position='after'>
+                <page name='sss' string='SSS'>
+                    <label for="emp_sss_num" string="SSS Number"/>
+                    <field name="emp_sss_num" />
+                    <field name="emp_detl_ids" readonly="1" context="{'tree_view_ref' : 'gov_bene_phils.sss_emp_detls_emp_tree'}" />
+                </page>
+            </xpath>      
+        </field>
+    </record>
+</odoo>

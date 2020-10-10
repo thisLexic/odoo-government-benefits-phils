@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_gov_bene_phils_sss,gov_bene_phils.sss,model_gov_bene_phils_sss,base.group_user,1,1,1,1
+
+access_gov_bene_phils_sss_image,gov_bene_phils.sss_image,model_gov_bene_phils_sss_image,base.group_user,1,1,1,1
+
+access_gov_bene_phils_sss_employee_details,gov_bene_phils.sss_employee_details,model_gov_bene_phils_sss_employee_details,base.group_user,1,1,1,1
+
+access_gov_bene_phils_philhealth,gov_bene_phils.philhealth,model_gov_bene_phils_philhealth,base.group_user,1,1,1,1

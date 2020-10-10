@@ -1,0 +1,16 @@
+<odoo>
+    <record id="res_company_inherit" model="ir.ui.view">
+        <field name="name">Res Company Inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='social_media']/parent::group/parent::page" position='after'>
+                <page name='sss' string="Gov't Benefits">
+                	<group>
+                    	<field name="com_sss_num" />
+                	</group>
+                </page>
+            </xpath>      
+        </field>
+    </record>
+</odoo>
