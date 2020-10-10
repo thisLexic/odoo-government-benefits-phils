@@ -7,7 +7,9 @@
             <xpath expr="//group[@name='social_media']/parent::group/parent::page" position='after'>
                 <page name='sss' string="Gov't Benefits">
                 	<group>
-                    	<field name="com_sss_num" />
+                        <field name="com_sss_num" />
+                        <field name="com_philhealth_num" />
+                        <field name="com_pagibig_num" />
                 	</group>
                 </page>
             </xpath>      
