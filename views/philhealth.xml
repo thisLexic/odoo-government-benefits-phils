@@ -1,0 +1,171 @@
+<odoo>
+
+<!-- Main PhilHealth records -->
+
+    <record id="philhealth_form" model="ir.ui.view">
+        <field name="name">PhilHealth Form</field>
+        <field name="model">gov_bene_phils.philhealth</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="12">
+                        <group col="4" colspan="6">
+                            <field name="date_paid" colspan="4"/>
+                            <field name="date_contrib_start" colspan="4" widget="daterange" options="{'related_end_date': 'date_contrib_end'}" />
+                            <field name="date_contrib_end" colspan="4" widget="daterange" options="{'related_start_date': 'date_contrib_start'}"/>
+                            <field name="ref" colspan="4"/>
+                            <field name="transaction_number" colspan="4"/>
+                            <field name="company_id" colspan="4"/>                            
+                        </group>
+                        <group col="4" colspan="6" string="Payment Details">
+                            <field name="payment_medium" colspan="4"/>
+                            <field name="payment_method" colspan="4"/>
+                            <br/>
+                            <field name="check_number" attrs="{'invisible':[('payment_method', '!=', 'check')]}" colspan="4"/>
+                            <field name="check_date" attrs="{'invisible':[('payment_method', '!=', 'check')]}" colspan="4"/>
+                            <field name="check_bank" attrs="{'invisible':[('payment_method', '!=', 'check')]}" colspan="4"/>
+                            <field name="check_branch" attrs="{'invisible':[('payment_method', '!=', 'check')]}" colspan="4"/>
+                        </group>
+                    </group>
+                    <group col="8" >
+                        <field name="image_ids" context="{'default_philhealth_id': active_id}" colspan="8" />                 
+                    </group>
+                    <group>
+                        <field name="emp_detl_ids" context="{'tree_view_ref' : 'gov_bene_phils.philhealth_emp_detls_philhealth_tree'}" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="philhealth_tree" model="ir.ui.view">
+        <field name="name">PhilHealth Tree</field>
+        <field name="model">gov_bene_phils.philhealth</field>
+        <field name="arch" type="xml">
+            <tree default_order="date_paid desc">
+                <field name="date_contrib_end" string="Date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="philhealth_search" model="ir.ui.view">
+        <field name="name">PhilHealth Search</field>
+        <field name="model">gov_bene_phils.philhealth</field>
+        <field name="arch" type="xml">
+            <search string="Search Invoice">
+                <field name="date_month"/>
+                <field name="ref"/>
+                <field name="date_year"/>
+           </search>
+        </field>
+    </record>
+
+
+     <record id="philhealth_action" model="ir.actions.act_window">
+        <field name="name">PhilHealth</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gov_bene_phils.philhealth</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="philhealth_menu" parent="gov_bene_menu" name="PhilHealth" sequence="2" action="philhealth_action" />
+
+
+<!-- Images for PhilHealth records -->
+
+
+    <record id="philhealth_image_form" model="ir.ui.view">
+        <field name="name">PhilHealth Image Form</field>
+        <field name="model">gov_bene_phils.philhealth_image</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="philhealth_id" readonly="1"/>
+                        <field name="label"/>
+                        <field name="image" />
+                        <field name="preview" widget="image" />
+                        <field name="image_loc" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="philhealth_image_tree" model="ir.ui.view">
+        <field name="name">PhilHealth Image Tree</field>
+        <field name="model">gov_bene_phils.philhealth_image</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="label"/>
+            </tree>
+        </field>
+    </record>
+
+
+     <record id="philhealth_image_action" model="ir.actions.act_window">
+        <field name="name">PhilHealth Image</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gov_bene_phils.philhealth_image</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+<!-- Employees for PhilHealth records -->
+
+
+    <record id="philhealth_emp_detls_form" model="ir.ui.view">
+        <field name="name">PhilHealth Employee Details Form</field>
+        <field name="model">gov_bene_phils.philhealth_employee_details</field>
+        <field name="arch" type="xml">
+            <form>
+                <group col="3">
+                    <field name="philhealth_id" readonly="1"/>
+                    <field name="currency_id" invisible="1" />
+                    <field name="emp_id" /> 
+                    <field name="emp_contrib" />
+                    <field name="comp_contrib" />
+                    <field name="ec_contrib" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="philhealth_emp_detls_philhealth_tree" model="ir.ui.view">
+        <field name="name">PhilHealth Employee Details PhilHealth Tree</field>
+        <field name="model">gov_bene_phils.philhealth_employee_details</field>
+        <field name="arch" type="xml">
+            <tree default_order="emp_id" limit='5'>
+                <field name="currency_id" invisible="1" />
+                <field name="emp_id" /> 
+                <field name="emp_contrib" />
+                <field name="comp_contrib" />
+                <field name="ec_contrib"  />
+            </tree>
+        </field>
+    </record>
+
+    <record id="philhealth_emp_detls_emp_tree" model="ir.ui.view">
+        <field name="name">PhilHealth Employee Details Emp Tree</field>
+        <field name="model">gov_bene_phils.philhealth_employee_details</field>
+        <field name="arch" type="xml">
+            <tree default_order="philhealth_id desc" limit="5">
+                <field name="currency_id" invisible="1" />
+                <field name="philhealth_id" /> 
+                <field name="emp_contrib" string="Employee" />
+                <field name="comp_contrib" string="Owner" />
+                <field name="ec_contrib" string="EC"  />
+            </tree>
+        </field>
+    </record>
+
+
+     <record id="philhealth_emp_detls_action" model="ir.actions.act_window">
+        <field name="name">PhilHealth Employee Details Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gov_bene_phils.philhealth_employee_details</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

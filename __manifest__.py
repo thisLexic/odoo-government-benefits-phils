@@ -26,6 +26,7 @@
         'security/ir.model.access.csv',
 
         'views/sss.xml',
+        'views/philhealth.xml',
         'views/hr_employee.xml',
         'views/res_company.xml',
     ],
