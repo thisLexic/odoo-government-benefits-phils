@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import datetime
 from odoo import models, fields, api
 
 # import logging
@@ -14,48 +14,66 @@ class Sss(models.Model):
     def name_get(self):
         result = []
         for record in self:
-            date = record.date_contrib_end
-            name = date.strftime("%B") + " " + date.strftime("%Y")
+            date = record.applicable_date
+            try:
+                name = date.strftime("%B") + " " + date.strftime("%Y")
+            except:
+                name = "Date Not Set"
             result.append((record.id, name))
         return result
 
 
-    @api.depends('date_contrib_end')
-    def _get_month(self):
+    @api.depends('applicable_year', 'applicable_month')
+    def _get_date(self):
         for rec in self:
-            rec.date_month = rec.date_contrib_end.strftime("%B")
+            try:
+                rec.applicable_date = datetime.datetime(int(rec.applicable_year), int(rec.applicable_month), 1)
+            except:
+                pass
 
 
-    @api.depends('date_contrib_end')
-    def _get_year(self):
-        for rec in self:
-            rec.date_year = rec.date_contrib_end.strftime("%Y")
+    # @api.depends('date_contrib_end')
+    # def _get_month(self):
+    #     for rec in self:
+    #         rec.date_month = rec.date_contrib_end.strftime("%B")
 
 
-    def _search_month(self, operator, value):
-        if operator == "like":
-            operator = "ilike"
-            return [(self.date_month, operator, value)]
+    # @api.depends('date_contrib_end')
+    # def _get_year(self):
+    #     for rec in self:
+    #         rec.date_year = rec.date_contrib_end.strftime("%Y")
 
 
-    def _search_year(self, operator, value):
-        if operator == "like":
-            operator = "ilike"
-            return [(self.date_year, operator, value)]
+    # def _search_month(self, operator, value):
+    #     if operator == "like":
+    #         operator = "ilike"
+    #         return [(self.date_month, operator, value)]
+
+
+    # def _search_year(self, operator, value):
+    #     if operator == "like":
+    #         operator = "ilike"
+    #         return [(self.date_year, operator, value)]
+
 
     def _default_currency_id(self):
          return self.env['res.currency'].search([('name', '=', 'PHP')], limit=1).id
 
+# fix: date_contrib_start, date_contrib_end, applicable_date
+
     date_paid = fields.Date(string="Date Paid")
-    date_contrib_start = fields.Date(string="Start Date")
-    date_contrib_end = fields.Date(string="End Date")
+    # date_contrib_start = fields.Date(string="Start Date")
+    # date_contrib_end = fields.Date(string="End Date")
+    applicable_date = fields.Date(string="Applicable Date", compute="_get_date", search="_search_date", store=True)
+    applicable_month = fields.Selection([('1', 'Jan'), ('2', 'Feb'), ('3', 'Mar'), ('4', 'Apr'), ('5', 'May'), ('6', 'June'), ('7', 'July'), ('8', 'Aug'), ('9', 'Sept'), ('10', 'Oct'), ('11', 'Now'), ('12', 'Dec')], string='Month')
+    applicable_year = fields.Selection([('2010', '2010'), ('2011', '2011'), ('2012', '2012'), ('2013', '2013'), ('2014', '2014'), ('2015', '2015'), ('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ], string='Year')
     ref = fields.Char(string="Reference")
     transaction_number = fields.Char(string="Trans Num")
     image_ids = fields.One2many('gov_bene_phils.sss_image', 'sss_id', string='Images')
     emp_detl_ids = fields.One2many('gov_bene_phils.sss_employee_details', 'sss_id', string='Employee Benefits')
     company_id = fields.Many2one('res.company', string="Company/Employer")
-    date_month = fields.Char(string="Month", compute="_get_month", search="_search_month", store=True)
-    date_year = fields.Char(string="Year", compute="_get_year", search="_search_year", store=True)
+    # date_month = fields.Char(string="Month", compute="_get_month", search="_search_month", store=True)
+    # date_year = fields.Char(string="Year", compute="_get_year", search="_search_year", store=True)
     payment_medium = fields.Selection([('O', 'Online'), ('M', 'Manual')], string="Online/Manual")
     payment_method = fields.Selection([('cash', 'Cash'), ('check', 'Check')], string="Cash/Check")
     check_number = fields.Char(string="Check Number")
