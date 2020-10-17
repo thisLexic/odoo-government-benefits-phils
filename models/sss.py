@@ -84,10 +84,19 @@ class Image(models.Model):
 
 
     sss_id = fields.Many2one('gov_bene_phils.sss', string="SSS Payment")
-    label = fields.Char(string="Label")
+    # label = fields.Char(string="Label")
+    custom_label = fields.Many2one('gov_bene_phils.sss_image_label', string='Label')
     image = fields.Binary(string="Image")
     preview = fields.Binary(string="Preview", compute="_get_preview")
     image_loc = fields.Html(string='Preview 2', compute="_get_image_html")
+
+
+class Label(models.Model):
+    _name = 'gov_bene_phils.sss_image_label'
+    _description = 'Contains labels for SSS images'
+
+    name = fields.Char(string="Name")
+    image_ids = fields.One2many('gov_bene_phils.sss_image', 'custom_label', string='Images')
 
 
 class Sss_Employee_Details(models.Model):
