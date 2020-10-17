@@ -43,6 +43,8 @@ class Sss(models.Model):
             operator = "ilike"
             return [(self.date_year, operator, value)]
 
+    def _default_currency_id(self):
+         return self.env['res.currency'].search([('name', '=', 'PHP')], limit=1).id
 
     date_paid = fields.Date(string="Date Paid")
     date_contrib_start = fields.Date(string="Start Date")
@@ -60,6 +62,8 @@ class Sss(models.Model):
     check_date = fields.Date(string="Check Date")
     check_bank = fields.Char(string="Bank")
     check_branch = fields.Char(string="Branch Name")
+    currency_id = fields.Many2one('res.currency', string="Currency", default=_default_currency_id)
+    amount = fields.Monetary(string="Amount")
 
 
 
