@@ -9,10 +9,10 @@
             <form>
                 <sheet>
                     <group col="12">
-                        <group col="4" colspan="6">
-                            <field name="applicable_month" colspan="4"/>
-                            <field name="applicable_year" colspan="4"/>                            
+                        <group col="4" colspan="6">    
                             <field name="applicable_date" colspan="4"/>
+                            <field name="applicable_month" colspan="4"/>
+                            <field name="applicable_year" colspan="4"/>
                             <field name="date_paid" colspan="4"/>
                             <field name="ref" colspan="4"/>
                             <field name="transaction_number" colspan="4"/>
