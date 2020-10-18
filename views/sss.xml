@@ -16,7 +16,8 @@
                             <field name="date_paid" colspan="4"/>
                             <field name="ref" colspan="4"/>
                             <field name="transaction_number" colspan="4"/>
-                            <field name="company_id" colspan="4"/>                            
+                            <field name="company_id" colspan="4"/>
+                            <field name="company_sss" colspan="4"/>                            
                         </group>
                         <group col="4" colspan="6" string="Payment Details">
                             <field name="amount" colspan="4"/>
@@ -149,6 +150,7 @@
                     <field name="sss_id" readonly="1"/>
                     <field name="currency_id" invisible="1" />
                     <field name="emp_id" /> 
+                    <field name="emp_sss_id" />
                     <field name="emp_contrib" />
                     <field name="comp_contrib" />
                     <field name="ec_contrib" />

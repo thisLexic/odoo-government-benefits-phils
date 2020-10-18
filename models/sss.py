@@ -31,39 +31,17 @@ class Sss(models.Model):
             except:
                 pass
 
-
-    # @api.depends('date_contrib_end')
-    # def _get_month(self):
-    #     for rec in self:
-    #         rec.date_month = rec.date_contrib_end.strftime("%B")
-
-
-    # @api.depends('date_contrib_end')
-    # def _get_year(self):
-    #     for rec in self:
-    #         rec.date_year = rec.date_contrib_end.strftime("%Y")
-
-
-    # def _search_month(self, operator, value):
-    #     if operator == "like":
-    #         operator = "ilike"
-    #         return [(self.date_month, operator, value)]
-
-
-    # def _search_year(self, operator, value):
-    #     if operator == "like":
-    #         operator = "ilike"
-    #         return [(self.date_year, operator, value)]
+    @api.depends('company_id')
+    def _get_sss_id(self):
+        for rec in self:
+            rec.company_sss = rec.company_id.com_sss_num
 
 
     def _default_currency_id(self):
          return self.env['res.currency'].search([('name', '=', 'PHP')], limit=1).id
 
-# fix: date_contrib_start, date_contrib_end, applicable_date
 
     date_paid = fields.Date(string="Date Paid")
-    # date_contrib_start = fields.Date(string="Start Date")
-    # date_contrib_end = fields.Date(string="End Date")
     applicable_date = fields.Date(string="Applicable Date", compute="_get_date", search="_search_date", store=True)
     applicable_month = fields.Selection([('1', 'Jan'), ('2', 'Feb'), ('3', 'Mar'), ('4', 'Apr'), ('5', 'May'), ('6', 'June'), ('7', 'July'), ('8', 'Aug'), ('9', 'Sept'), ('10', 'Oct'), ('11', 'Now'), ('12', 'Dec')], string='Month')
     applicable_year = fields.Selection([('2010', '2010'), ('2011', '2011'), ('2012', '2012'), ('2013', '2013'), ('2014', '2014'), ('2015', '2015'), ('2016', '2016'), ('2017', '2017'), ('2018', '2018'), ('2019', '2019'), ('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ], string='Year')
@@ -72,8 +50,7 @@ class Sss(models.Model):
     image_ids = fields.One2many('gov_bene_phils.sss_image', 'sss_id', string='Images')
     emp_detl_ids = fields.One2many('gov_bene_phils.sss_employee_details', 'sss_id', string='Employee Benefits')
     company_id = fields.Many2one('res.company', string="Company/Employer")
-    # date_month = fields.Char(string="Month", compute="_get_month", search="_search_month", store=True)
-    # date_year = fields.Char(string="Year", compute="_get_year", search="_search_year", store=True)
+    company_sss = fields.Char(string="SSS ID", compute="_get_sss_id")
     payment_medium = fields.Selection([('O', 'Online'), ('M', 'Manual')], string="Online/Manual")
     payment_method = fields.Selection([('cash', 'Cash'), ('check', 'Check')], string="Cash/Check")
     check_number = fields.Char(string="Check Number")
@@ -125,6 +102,10 @@ class Sss_Employee_Details(models.Model):
     _name = 'gov_bene_phils.sss_employee_details'
     _description = 'Contains employee payment details of SSS transaction'
 
+    @api.depends('emp_id')
+    def _get_sss_id(self):
+        for rec in self:
+            rec.emp_sss_id = rec.emp_id.emp_sss_num
 
     def _default_currency_id(self):
          return self.env['res.currency'].search([('name', '=', 'PHP')], limit=1).id
@@ -133,6 +114,7 @@ class Sss_Employee_Details(models.Model):
     sss_id = fields.Many2one('gov_bene_phils.sss', string="SSS Payment")
     currency_id = fields.Many2one('res.currency', string="Currency", default=_default_currency_id)
     emp_id = fields.Many2one('hr.employee', string="Employee")
+    emp_sss_id = fields.Char(string="SSS ID", compute="_get_sss_id")
     emp_contrib = fields.Monetary(string="Employee Contribution")
     comp_contrib = fields.Monetary(string="Owner Contribution")
     ec_contrib = fields.Monetary(string="EC Contribution")
