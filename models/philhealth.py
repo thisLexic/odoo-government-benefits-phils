@@ -8,41 +8,42 @@ class Philhealth(models.Model):
     def name_get(self):
         result = []
         for record in self:
-            date = record.date_contrib_end
+            # date = record.date_contrib_end
+            date = record.date_contrib_start
             name = date.strftime("%B") + " " + date.strftime("%Y")
             result.append((record.id, name))
         return result
 
 
-    @api.depends('date_contrib_end')
-    def _get_month(self):
-        for rec in self:
-            rec.date_month = rec.date_contrib_end.strftime("%B")
+    # @api.depends('date_contrib_end')
+    # def _get_month(self):
+    #     for rec in self:
+    #         rec.date_month = rec.date_contrib_end.strftime("%B")
 
 
-    @api.depends('date_contrib_end')
-    def _get_year(self):
-        for rec in self:
-            rec.date_year = rec.date_contrib_end.strftime("%Y")
+    # @api.depends('date_contrib_end')
+    # def _get_year(self):
+    #     for rec in self:
+    #         rec.date_year = rec.date_contrib_end.strftime("%Y")
 
 
-    def _search_month(self, operator, value):
-        if operator == "like":
-            operator = "ilike"
-            return [(self.date_month, operator, value)]
+    # def _search_month(self, operator, value):
+    #     if operator == "like":
+    #         operator = "ilike"
+    #         return [(self.date_month, operator, value)]
 
 
-    def _search_year(self, operator, value):
-        if operator == "like":
-            operator = "ilike"
-            return [(self.date_year, operator, value)]
+    # def _search_year(self, operator, value):
+    #     if operator == "like":
+    #         operator = "ilike"
+    #         return [(self.date_year, operator, value)]
 
 
-    date_paid = fields.Date(string="Date Paid")
-    date_contrib_start = fields.Date(string="Start Date")
-    date_contrib_end = fields.Date(string="End Date")
-    ref = fields.Char(string="Reference")
-    transaction_number = fields.Char(string="Trans Num")
+    date_paid = fields.Date(string="Applicable Date")
+    date_contrib_start = fields.Date(string="Date Paid")
+    # date_contrib_end = fields.Date(string="End Date")
+    ref = fields.Char(string="Filling Ref#")
+    transaction_number = fields.Char(string="O.R. #")
     image_ids = fields.One2many('gov_bene_phils.philhealth_image', 'philhealth_id', string='Images')
     emp_detl_ids = fields.One2many('gov_bene_phils.philhealth_employee_details', 'philhealth_id', string='Employee Benefits')
     company_id = fields.Many2one('res.company', string="Company/Employer")
