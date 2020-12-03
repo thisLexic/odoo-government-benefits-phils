@@ -11,8 +11,9 @@
                     <group col="12">
                         <group col="4" colspan="6">
                             <field name="date_paid" colspan="4"/>
-                            <field name="date_contrib_start" colspan="4" widget="daterange" options="{'related_end_date': 'date_contrib_end'}" />
-                            <field name="date_contrib_end" colspan="4" widget="daterange" options="{'related_start_date': 'date_contrib_start'}"/>
+                            <field name="date_contrib_start" colspan="4"/>
+                            <!-- <field name="date_contrib_start" colspan="4" widget="daterange" options="{'related_end_date': 'date_contrib_end'}" /> -->
+                            <!-- <field name="date_contrib_end" colspan="4" widget="daterange" options="{'related_start_date': 'date_contrib_start'}"/> -->
                             <field name="ref" colspan="4"/>
                             <field name="transaction_number" colspan="4"/>
                             <field name="company_id" colspan="4"/>                            
@@ -43,7 +44,8 @@
         <field name="model">gov_bene_phils.pagibig</field>
         <field name="arch" type="xml">
             <tree default_order="date_paid desc">
-                <field name="date_contrib_end" string="Date"/>
+                <field name="date_contrib_start" string="Date"/>
+                <!-- <field name="date_contrib_end" string="Date"/> -->
             </tree>
         </field>
     </record>
